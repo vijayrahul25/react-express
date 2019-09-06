@@ -8,16 +8,24 @@ export default class Books extends React.Component {
 
         this.state = {
             books: [],
-            fetched:false
+            fetched: false,
+            totalRecords: 0,
+            start: 0,
+            end: 10,
         };
     }
     componentDidMount() {
       this.getData();
+        this.getTotalbooks();
     }
 
     getData = async () => {
-        var bookData = await bookApi.getBooks();        
+        var bookData = await bookApi.getBooks(this.state.start, this.state.end);
         this.setState({books: bookData, fetched:true}) 
+    }
+    getTotalbooks = async () => {
+        var count = await bookApi.getTotalbooks();
+        this.setState({ totalRecords: count });
     }
 
     render() {

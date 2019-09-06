@@ -8,8 +8,7 @@ import React from 'react'
               <img src={book.thumbnailUrl} className="card-img-top bookthumbs" alt={book.title}/>
               <div className="card-body">
                 <h5 className="card-title">ISBN: {book.isbn}</h5> 
-                <h5 className="card-title">ISBN: {book.pageCount}</h5>                
-                
+          <h5 className="card-title">Pages: {book.pageCount}</h5>
                 <p className="card-text">{book.shortDescription}</p>
                 <p className="card-text text-left">Authors: {book.authors}</p>
                 <p className="card-text text-left">Categories: {book.categories}</p>
