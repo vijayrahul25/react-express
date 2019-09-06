@@ -4,9 +4,11 @@ let bookController = {};
 
 bookController.getAllBooks = async function(req, res)  {
     
-    const start = parseInt(req.query.start);
-    const end = parseInt(req.query.end);
-    var data = await Books.find({}).limit(end).skip(start);
+    const pageNumber = parseInt(req.query.start);
+    const pageSize = parseInt(req.query.end);
+    const start = ( pageNumber - 1 ) * pageSize;
+
+    var data = await Books.find({}).skip(start).limit(pageSize).sort({'_id':1});
     return res.status(200).send({ data });
 }
 bookController.getBookCount = async function(req, res)  {    

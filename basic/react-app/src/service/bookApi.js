@@ -9,9 +9,9 @@ export default class bookApi {
             }, 500);
         });
     }
-    static getBooks = async (start, end) => {
+    static getBooks = async (pageNumber, pageSize) => {
         try {
-            let bookURL = `http://localhost:5000/api/books?start=${start}&end=${end}`;
+            let bookURL = `http://localhost:5000/api/books?start=${pageNumber}&end=${pageSize}`;
             let res = await axios.get(bookURL);
             let { data } = res.data;
             return data;
@@ -20,11 +20,10 @@ export default class bookApi {
         }
 
     }
-    static getTotalbooks = async (start, end) => {
+    static getTotalbooks = async () => {
         try {            
             let res = await axios.get('http://localhost:5000/api/books/count');
-            let { count } = res.data;
-            console.log('count', count)
+            let { count } = res.data;            
             return count;
         } catch (error) {
             alert(error); 
