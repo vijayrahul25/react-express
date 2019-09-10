@@ -93,8 +93,12 @@ export default class App extends React.Component {
   }
 
   removeFromCart = (itemid) => {
-    let cartItems = this.state.cartItems.filter(item => item._id !== itemid);
-    this.setState(prevstate => ({ cartItems }));
+    let itemToRemove= this.state.cartItems.find( item=> item._id === itemid )
+    let cartItems = this.state.cartItems.filter( item => item._id !== itemid );  
+
+    let cartTotal = this.state.cartTotal - (itemToRemove.price * itemToRemove.cartQuantity );
+
+    this.setState(prevstate => ({ cartItems, cartTotal }));
   }
 
   render() {
