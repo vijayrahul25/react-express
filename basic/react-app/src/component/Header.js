@@ -1,40 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
-const Header = (props) => (
-    <nav className="header navbar navbar-dark bg-dark">
-        <div className="container">
-            <div className="row m-auto">
-                <i className="fa fa-film fa-2x text-white my-auto"></i>
-                <div className="h3 ml-3 my-auto text-light" href="/">{props.title}</div>
-            </div>
+import CartPopup from './shop/CartPopup';
 
 
-            <div>
-            <Link to="/">
-                <button>home</button>
-            </Link>
-            <Link to="/booklist">
-                <button>Books</button>
-            </Link>
-            <Link to="/contact">
-                <button>contact</button>
-            </Link>
-            
-            </div>
 
-        </div>
-        
-    </nav>
-);
-
-Header.defaultProps = {
-    title: 'Books Title'
+export default class Header extends React.Component {
+    render() {
+        return (
+            <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+                <div className="navbar-header">
+                    <span className="navbar-brand" >
+                        <i className="fa fa-film  text-white my-auto"></i>
+                        &nbsp;{this.props.title}</span>
+                </div>
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item"><Link className="nav-link" to="/">home</Link></li>
+                    <li className="nav-item"><Link className="nav-link" to="/booklist">Books</Link></li>
+                    <li className="nav-item"><Link className="nav-link" to="/contact">contact</Link></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <CartPopup cartItems={this.props.cartItems} cartTotal={this.props.cartTotal} removeFromCart={this.props.removeFromCart} />
+                    </li>
+                </ul>
+            </nav >
+        )
+    }
 };
-
-Header.propTypes = {
-    title: PropTypes.string
-};
-
-export default Header;

@@ -24,8 +24,12 @@
 }
 
 .bookthumbs {
-  width: 100px;
-  height: 100px;
+  width: 100px !important;
+  height: 100px !important;
+}
+.cartthumbs {
+  width: 50px !important;
+  height: 50px !important;
 }
 .PageSpan {
   padding:5px;

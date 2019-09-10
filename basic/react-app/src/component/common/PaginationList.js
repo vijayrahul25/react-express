@@ -4,8 +4,8 @@ export default class PaginationList extends React.Component {
 
   handlClick = (e) => {
     let page = parseInt(e.target.dataset.page);
-    // dont do anything
     console.log(page)
+    // dont do anything    
   }
 
   handlNextClick = (e) => {    
@@ -26,8 +26,7 @@ export default class PaginationList extends React.Component {
     this.props.getpage(parseInt(this.props.lastPage));
   }
 
-  render() {
-    // eslint-disable-next-line
+  render() {        
     let lastPage = parseInt(this.props.lastPage);
 
     let prev = (this.props.currentpage > 1) ?  <li class="page-item"><span className='page-link' data-page={this.props.currentpage} onClick={this.handlPrevClick}>Prev</span></li> : null;
