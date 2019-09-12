@@ -1,44 +1,81 @@
 import React, { Component } from 'react';
+import ApiHandler from './../../service/ApiHandler';
+import AuthService from './../../service/AuthService';
 
 export default class Login extends Component {
     constructor() {
         super();
-        this.handleChange = this.handleChange.bind(this);
+        this.state = {
+            username: '',
+            password: '',
+            error: '',
+            success: ''
+        };
     }
     render() {
+        let error = (this.state.error) ? <div class="alert alert-danger" role="alert">{this.state.error}</div> : ''
+        let success = (this.state.success) ? <div class="alert alert-success" role="alert">{this.state.success}</div> : ''
         return (
             <div class="col-sm">
                 <h1>Login</h1>
+                {error}
+               {success}
                 <form>
-                <div class="form-group">
-                    <input
-                        className="form-control"
-                        placeholder="Username goes here..."
-                        name="username"
-                        type="text"
-                        onChange={this.handleChange}
-                    />
+                    <div class="form-group">
+                        <input
+                            className="form-control"
+                            placeholder="Username goes here..."
+                            name="username"
+                            type="text"
+                            onChange={this.handleChange}
+                        />
                     </div>
                     <div class="form-group">
-                    <input
-                        className="form-control"
-                        placeholder="Password goes here..."
-                        name="password"
-                        type="password"
-                        onChange={this.handleChange}
-                    />
+                        <input
+                            className="form-control"
+                            placeholder="Password goes here..."
+                            name="password"
+                            type="password"
+                            onChange={this.handleChange}
+                        />
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" onClick={this.handleSubmit}>Submit</button>
                 </form>
             </div>
         );
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState(
             {
                 [e.target.name]: e.target.value
             }
         )
+    }
+    clearErrorSuccess = () => {
+        this.setState({ success: '' });
+        this.setState({ error: '' })
+    }
+    handleSubmit = (e) => {        
+        e.preventDefault();
+        this.clearErrorSuccess();
+        var body = {
+            username: this.state.username,
+            password: this.state.password
+        }
+
+        ApiHandler.postRequest('user/login', body).then((response) => {
+            
+            if (response.success) {
+                this.setState({ success: response.success })
+                const Auth = new AuthService();                
+                Auth.setToken(response.token);
+                this.props.history.push('/');
+                window.location.reload(true);
+                //
+            } else {
+                this.setState({ error: response.error }) 
+            }
+        })
     }
 }

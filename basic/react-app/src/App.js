@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Header from './component/common/Header';
 import BookPage from './component/book/BookPage';
-import bookApi from './service/bookApi';
+import ApiHandler from './service/ApiHandler';
 import Login from './component/authentication/Login';
+import Logout from './component/authentication/Logout';
 import Signup from './component/authentication/Signup';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -35,11 +36,14 @@ export default class App extends React.Component {
       pagination: { totalRecords: 0, startPage: 1, currentPage: 1, pageSize: 10 },
       cartItems: [],
       cartTotal: 0,
-      user:{id:0, 'username': 'Guest'}
+      isLogin:false
     };
   }
+
+  setLoginStatus = (status) => this.setState({isLogin: status})
+
   getBooks = async (page) => {
-    var bookData = await bookApi.getBooks(page, this.state.pagination.pageSize);
+    var bookData = await ApiHandler.getBooks(page, this.state.pagination.pageSize);    
     const { pagination } = { ...this.state };
     pagination.currentPage = page;
 
@@ -48,7 +52,7 @@ export default class App extends React.Component {
   }
 
   getTotalbooks = async () => {
-    var count = await bookApi.getTotalbooks();
+    var count = await ApiHandler.getTotalbooks();
     const { pagination } = { ...this.state };
     pagination.totalRecords = count;
     this.setState(prevstate => ({ pagination }));
@@ -112,8 +116,9 @@ export default class App extends React.Component {
             <div className="row">
               <Route exact path="/" component={Home} />
               <Route exact path="/contact" component={Contact} />
-              <Route exact path="/login" component={Login} />
+              <Route exact path="/login" setLoginStatus = {this.setLoginStatus} component={Login} />
               <Route exact path="/signup" component={Signup} />
+              <Route exact path="/logout" component={Logout} />
               {/* For any React Router v4 optional parameters in a <Route> are denoted with a ? suffix. */}
 
               <Route path='/booklist/:page?' render={(props) => <BookPage

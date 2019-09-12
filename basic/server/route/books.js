@@ -3,7 +3,7 @@ const bookController = require('./../lib/controller/book');
 module.exports = function (express) {
     var bookRouter = express.Router();
     
-    bookRouter.get('/books', bookController.getAllBooks);
-    bookRouter.get('/books/count', bookController.getBookCount);
+    bookRouter.get('/', bookController.getAllBooks);
+    bookRouter.get('/count', bookController.getBookCount);
     return bookRouter;
 }

@@ -18,10 +18,16 @@ app.use(cors())
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log('App listening on port ' + port));
 
+/*  PASSPORT SETUP  */
+const passport = require('passport');
+require('./lib/passport')(passport);
+
+var user = require('./route/user')(express, passport);
 var book = require('./route/books')(express);
 
 
-app.use('/api', book);
+app.use('/api/books', book);
+app.use('/api/user', user);
 
 app.use(function (req, res) {
 	return res.status(404).send({ message: 'Route' + req.url + ' Not found.' });
