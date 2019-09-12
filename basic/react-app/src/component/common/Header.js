@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CartPopup from './shop/CartPopup';
+import CartPopup from './../shop/CartPopup';
 
 
 
@@ -19,6 +19,8 @@ export default class Header extends React.Component {
                     <li className="nav-item"><Link className="nav-link" to="/contact">contact</Link></li>
                 </ul>
                 <ul class="navbar-nav">
+                <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+                <li className="nav-item"><Link className="nav-link" to="/signup">Signup</Link></li>
                     <li class="nav-item">
                         <CartPopup cartItems={this.props.cartItems} cartTotal={this.props.cartTotal} removeFromCart={this.props.removeFromCart} />
                     </li>

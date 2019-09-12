@@ -2,24 +2,25 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
-import Header from './component/Header';
+import Header from './component/common/Header';
 import BookPage from './component/book/BookPage';
 import bookApi from './service/bookApi';
+import Login from './component/authentication/Login';
+import Signup from './component/authentication/Signup';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
 const Home = () => (
-  <div>
-    <div className="row">Home
+
+  <div class="col-sm">Home
      <div>Welcome to book library sample</div>
     </div>
 
-  </div>
 )
 
 
 const Contact = () => (
-  <div>
+  <div class="col-sm">
     Contact
   </div>
 )
@@ -33,7 +34,8 @@ export default class App extends React.Component {
       bookfetched: false,
       pagination: { totalRecords: 0, startPage: 1, currentPage: 1, pageSize: 10 },
       cartItems: [],
-      cartTotal: 0
+      cartTotal: 0,
+      user:{id:0, 'username': 'Guest'}
     };
   }
   getBooks = async (page) => {
@@ -110,6 +112,8 @@ export default class App extends React.Component {
             <div className="row">
               <Route exact path="/" component={Home} />
               <Route exact path="/contact" component={Contact} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
               {/* For any React Router v4 optional parameters in a <Route> are denoted with a ? suffix. */}
 
               <Route path='/booklist/:page?' render={(props) => <BookPage

@@ -26,6 +26,7 @@ export default class CartPopup extends React.Component {
     let data = <div className="row"><div className="col-sm"> No item added in cart</div></div>;
     let cartTotal = '';
     let cartFooter = '';
+    let cartButtonText = '';
     if (this.props.cartItems.length > 0) {
       data = this.props.cartItems.map((item, index) => {
         return (
@@ -47,10 +48,11 @@ export default class CartPopup extends React.Component {
 
       cartTotal = <p className="float-right"><b>Total : {this.props.cartTotal}</b></p>
       cartFooter = <Button color="primary" onClick={this.toggle}>Checkout</Button>
+      cartButtonText = ` (${this.props.cartItems.length})`;
     }
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}> <i className="fa fa-shopping-cart fa-xs "></i> cart</Button>
+        <Button color="danger" onClick={this.toggle}> <i className="fa fa-shopping-cart fa-xs "></i>{cartButtonText}</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className='modal-lg'>
           <ModalHeader className="border border-0" toggle={this.toggle}>Shooping Cart</ModalHeader>
           <ModalBody>
