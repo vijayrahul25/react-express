@@ -10,8 +10,7 @@ export default class ApiHandler {
         });
     }
     static getBooks = async (pageNumber, pageSize) => {
-        try {
-            console.log('getBooks called')
+        try {            
             let bookURL = `http://localhost:5000/api/books?start=${pageNumber}&end=${pageSize}`;
             let res = await axios.get(bookURL);
             let { data } = res.data;
