@@ -8,6 +8,7 @@ import ApiHandler from './service/ApiHandler';
 import Login from './component/authentication/Login';
 import Logout from './component/authentication/Logout';
 import Signup from './component/authentication/Signup';
+import reduxBookPage from './container/book/Books.js';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -134,6 +135,7 @@ export default class App extends React.Component {
                 addToCart={this.addToCart}
               />}
               />
+              <Route exact path="/reduxbooklist/" component={reduxBookPage} />
 
             </div>
           </div>
