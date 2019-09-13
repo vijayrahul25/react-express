@@ -1,7 +1,11 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, combineReducers , applyMiddleware } from "redux";
 import booksReducer from "./redux/reducers/book/books";
-import thunk from "redux-thunk";
+import paginationReducer from "./redux/reducers/pagination";
 
-const store = createStore(booksReducer, applyMiddleware(thunk));
+import thunk from "redux-thunk";
+const rootReducer = combineReducers({
+    booksReducer, paginationReducer
+});
+const store = createStore(rootReducer, applyMiddleware(thunk));
 export default store;
 

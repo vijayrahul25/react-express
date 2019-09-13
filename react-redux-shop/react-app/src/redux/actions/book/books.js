@@ -26,12 +26,12 @@ export const fetch_books_error = () => {
     };
 };
 
-export function actionLoadBooks() {
+export function actionLoadBooks(start, end) {
     return async dispatch => {
         try {
 
             dispatch(fetch_books());
-            const bookData = await ApiHandler.getBooks(1, 10);
+            const bookData = await ApiHandler.getBooks(start, end);
             dispatch(fetched_books(bookData));
         }
         catch (error) {

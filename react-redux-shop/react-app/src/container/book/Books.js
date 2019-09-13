@@ -1,15 +1,18 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import store from "./../../store";
+// import store from "./../../store";
 import { actionLoadBooks, actionLoadBookTotal } from "./../../redux/actions/book/books";
+import { setTotalRecords } from "./../../redux/actions/pagination";
+
 import BookList from './BookList';
 
 class Books extends React.Component {
 
-    async componentDidMount() {
+    async componentDidMount() {        
         await this.props.actionLoadBookTotal();
-        await this.props.actionLoadBooks();
+        this.props.setTotalRecords(this.props.totalBooks);        
+        await this.props.actionLoadBooks(this.props.pagination.currentPage,this.props.pagination.pageSize);
     }
 
 
@@ -22,10 +25,8 @@ class Books extends React.Component {
         } else {
             
             if (this.props.books.length > 0) {
-                data = this.props.books.map((book, index) => {
-               
-                    return <BookList key={index} book={book} addToCart={this.props.addToCart} />
-                }
+                data = this.props.books.map((book, index) =>              
+                    <BookList key={index} book={book} addToCart={this.props.addToCart} />
                 )
 
                 data = <div className="row">
@@ -48,14 +49,16 @@ class Books extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const { books, isError, isFetching, totalBooks } = state;
+    const { books, isError, isFetching, totalBooks } = state.booksReducer;
+    const { pagination } = state.paginationReducer;
+
     return {
-        books, isError, isFetching, totalBooks
+        books, isError, isFetching, totalBooks, pagination
     };
 };
 
 const mapDispatchToProps = (dispatch) => {   
-    return bindActionCreators({ actionLoadBooks, actionLoadBookTotal }, dispatch);
+    return bindActionCreators({ actionLoadBooks, actionLoadBookTotal, setTotalRecords }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps )(Books);
