@@ -22,10 +22,11 @@ const booksReducer = (state = initialState, action) => {
                 ...state, totalBooks: action.count
             };
             
-        case "FETCH_BOOKS_ERROR":
+        case "UPDATE_BOOKS":
             return {
-                ...state, isError: true
+                ...state, books: action.books
             };
+        
         default:
             return state;
     }

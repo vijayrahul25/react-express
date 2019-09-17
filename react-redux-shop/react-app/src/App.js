@@ -118,7 +118,7 @@ export default class App extends React.Component {
       <Router>
         <div className="App">
           <Header title='Book Shop' cartItems={this.state.cartItems} cartTotal={this.state.cartTotal}  removeFromCart={this.removeFromCart} user={this.state.user} setUserOnLogin={this.setUserOnLogin}/>
-          <div className="container">
+          <div className="container h-100">
             <div className="row">
               <Route exact path="/" component={Home} />
               <Route exact path="/contact" component={Contact} />
@@ -135,7 +135,7 @@ export default class App extends React.Component {
                 addToCart={this.addToCart}
               />}
               />
-              <Route exact path="/reduxbooklist/" component={reduxBookPage} />
+              <Route exact path="/reduxbooklist/:page?" component={reduxBookPage} />
 
             </div>
           </div>

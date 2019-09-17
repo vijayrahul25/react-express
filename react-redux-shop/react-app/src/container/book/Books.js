@@ -1,48 +1,70 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// import store from "./../../store";
+
+/* import redux actions*/
 import { actionLoadBooks, actionLoadBookTotal } from "./../../redux/actions/book/books";
-import { setTotalRecords } from "./../../redux/actions/pagination";
+import { setTotalRecords, setCurrentPage } from "./../../redux/actions/pagination";
 
 import BookList from './BookList';
+import PaginationList from './../common/PaginationList';
 
 class Books extends React.Component {
 
-    async componentDidMount() {        
+    async componentWillMount() {
         await this.props.actionLoadBookTotal();
-        this.props.setTotalRecords(this.props.totalBooks);        
-        await this.props.actionLoadBooks(this.props.pagination.currentPage,this.props.pagination.pageSize);
+        this.props.setTotalRecords(this.props.totalBooks);
+
+        let intPageParameter = parseInt(this.props.match.params.page);
+        let intCurrentPage = parseInt(this.props.pagination.currentPage);
+        let intPageSize = parseInt(this.props.pagination.pageSize);
+        let totalRecords = parseInt(this.props.pagination.totalRecords);
+
+        if (!isNaN(intPageParameter) && intCurrentPage !== intPageParameter && intPageParameter <= totalRecords) {
+            this.props.setCurrentPage(intPageParameter);
+            intCurrentPage = intPageParameter;
+        }
+
+        await this.props.actionLoadBooks(intCurrentPage, intPageSize);
     }
 
+    loadNextPageRecords = (currentPage, pageSize) => {
+        this.props.actionLoadBooks(currentPage, pageSize);
+        this.props.history.push('/reduxbooklist/' + currentPage);
+    }
 
     render() {
         let data = null;
-        //let lastPage = Math.ceil(this.props.globalState.pagination.totalRecords / this.props.globalState.pagination.pageSize);
-       
         if (this.props.isFetching) {
-            data = 'Loading...';
+            data = <div className="text-center ">
+            <div className="spinner-border spinner-border-large" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>;
         } else {
-            
+
             if (this.props.books.length > 0) {
-                data = this.props.books.map((book, index) =>              
-                    <BookList key={index} book={book} addToCart={this.props.addToCart} />
+                data = this.props.books.map((book, index) =>
+                    <BookList key={index} book={book} />
                 )
 
-                data = <div className="row">
+                data = <div className='col-sm'>
+                    <PaginationList loadNextPageRecords={this.loadNextPageRecords} />
                     <div className="card-columns text-center" >
                         {data}
                     </div>
-                </div>
+                    </div>
+                    
+               
             } else {
-                data = <div className="row"><div className="alert alert-warning">
+                data = <div className="alert alert-warning">
                     No records found...
-                            </div></div>
+                            </div>
             }
         }
 
         return (
-            <div>{data}</div>
+            <div className='col-sm'>{data}</div>
         );
 
     }
@@ -57,8 +79,8 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {   
-    return bindActionCreators({ actionLoadBooks, actionLoadBookTotal, setTotalRecords }, dispatch);
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ actionLoadBooks, actionLoadBookTotal, setTotalRecords, setCurrentPage }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps )(Books);
+export default connect(mapStateToProps, mapDispatchToProps)(Books);

@@ -1,4 +1,6 @@
 import React from 'react'
+import ErrorMessage from './../../component/common/Error';
+import Cartbutton from './../cart/Cartbutton';
 
 export default class BookList extends React.Component {
 
@@ -14,9 +16,9 @@ export default class BookList extends React.Component {
     // }
 
     render() {
-
+        
         let short = (this.props.book.shortDescription) ? this.props.book.shortDescription.substring(0, 50) : '';
-        let disabled = (this.props.book.error) ? 'disabled' : '';
+        let disabled = (this.props.book.error) ? true : false;
         return (
             <div>
                 <div className="card">
@@ -30,8 +32,10 @@ export default class BookList extends React.Component {
                         <p className="card-text text-left">Categories: {this.props.book.categories}</p>
                     </div>
                     <div className="card-footer">
-                        <span class='pr-1'>Quanity: {this.props.book.quantity}</span>
-                        <span class='pr-1'>Price: {this.props.book.price}</span>
+                    <ErrorMessage errorMessage = {this.props.book.error} />
+                        <span className='pr-1'>Quanity: {this.props.book.quantity}</span>
+                        <span className='pr-1'>Price: {this.props.book.price}</span>
+                        <span><Cartbutton  disabled={disabled} bookid={this.props.book._id} errorMessage = {this.props.book.error}/></span>
                     </div>
                 </div>
             </div>

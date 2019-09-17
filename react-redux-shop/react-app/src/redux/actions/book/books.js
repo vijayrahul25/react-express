@@ -26,6 +26,13 @@ export const fetch_books_error = () => {
     };
 };
 
+export const update_books_state = (books) => {
+    return {
+        type: "UPDATE_BOOKS",
+        books
+    };
+};
+
 export function actionLoadBooks(start, end) {
     return async dispatch => {
         try {

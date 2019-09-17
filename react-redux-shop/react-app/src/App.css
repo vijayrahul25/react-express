@@ -40,6 +40,9 @@
 .activepage {
   color:red;
 }
+.clickable {
+  cursor: pointer;
+}
 
 @keyframes App-logo-spin {
   from {

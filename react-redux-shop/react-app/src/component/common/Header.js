@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CartPopup from './../shop/CartPopup';
+import CartPopup from './../../container/cart/CartPopup';
 import AuthService from './../../service/AuthService';
 
 function UserNavigation(props) {
@@ -8,7 +8,7 @@ function UserNavigation(props) {
          <li className="nav-item"><p className="navbar-text " ><mark>Hi, {props.username}</mark></p></li>
         <li className="nav-item"><Link className="nav-link" to="/logout">Logout</Link></li>        
         <li className="nav-item">
-            <CartPopup cartItems={props.cartItems} cartTotal={props.cartTotal} removeFromCart={props.removeFromCart} />
+            <CartPopup />
         </li>
     </ul>);
 }
@@ -19,7 +19,7 @@ function GuestNavigation(props) {
         <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/signup">Signup</Link></li>
         <li className="nav-item">
-            <CartPopup cartItems={props.cartItems} cartTotal={props.cartTotal} removeFromCart={props.removeFromCart} />
+            <CartPopup />
         </li>
     </ul>);
 }
