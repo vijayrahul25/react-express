@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { actionLoadBooks, actionLoadBookTotal } from "./../../redux/actions/book/books";
 import { setTotalRecords, setCurrentPage } from "./../../redux/actions/pagination";
 
-import BookList from './BookList';
+import BookList from './../../component/book/BookList';
 import PaginationList from './../common/PaginationList';
 
 class Books extends React.Component {
@@ -30,7 +30,7 @@ class Books extends React.Component {
 
     loadNextPageRecords = (currentPage, pageSize) => {
         this.props.actionLoadBooks(currentPage, pageSize);
-        this.props.history.push('/reduxbooklist/' + currentPage);
+        this.props.history.push('/booklist/' + currentPage);
     }
 
     render() {

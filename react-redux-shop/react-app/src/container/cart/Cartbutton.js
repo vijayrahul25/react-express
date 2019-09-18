@@ -17,7 +17,7 @@ class Cartbutton extends React.Component {
     let bookid = e.target.dataset.bookid;
     let updatedBooks = this.props.books.map((book, index) => {
       if (book._id === bookid) {
-        if (book.quantity <= 0) {         
+        if (book.quantity <= 0) {
           //no more item left send error message
           return {
             ...book,
@@ -30,7 +30,7 @@ class Cartbutton extends React.Component {
 
         if (itemExist >= 0) {
           let cartQuantity = parseInt(cartItems[itemExist].cartQuantity) + 1
-          cartItems[itemExist].cartQuantity = cartQuantity;          
+          cartItems[itemExist].cartQuantity = cartQuantity;
         } else {
           cartItem.cartQuantity = 1;
           cartItems.push(cartItem);
@@ -41,7 +41,7 @@ class Cartbutton extends React.Component {
 
         this.props.updateCartItems(cartItems);
         this.props.updateCartTotal(cartTotal);
-        
+
         return {
           ...book,  // copy the existing item
           quantity: parseInt(book.quantity) - 1  // replace the email addr
@@ -49,9 +49,9 @@ class Cartbutton extends React.Component {
       }
       return book;
     });
-//updatedBooks
+    //updatedBooks
 
-this.props.update_books_state(updatedBooks);
+    this.props.update_books_state(updatedBooks);
 
   }
 
