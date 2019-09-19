@@ -28,9 +28,9 @@ const Contact = () => (
 export default class App extends React.Component {
   constructor() {
     super();
-    
+    console.log('process env - ', process.env)
     this.state = {    
-      user:{_id:0,username:'Guest'}
+      user:{_id:`${process.env.REACT_APP_GUEST_USERID}`,username:`${process.env.REACT_APP_GUEST_USERNAME}`}
     };
   }
 

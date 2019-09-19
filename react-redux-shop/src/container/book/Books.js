@@ -12,6 +12,7 @@ import PaginationList from './../common/PaginationList';
 class Books extends React.Component {
 
     async componentWillMount() {
+        console.log('props - ', this.props)
         await this.props.actionLoadBookTotal();
         this.props.setTotalRecords(this.props.totalBooks);
 
