@@ -22,7 +22,7 @@ module.exports = function (express, passport) {
 				const token = jwt.sign({ _id, username }, config.secret, {
 					expiresIn: config.tokenExpireTime // expires in 24 hours
 				});
-				const userdetails = { _id, username };
+				
 				return res.status(200).send({ success: 'login success !!', token });
 			});
 		})(req, res, next);

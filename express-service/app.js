@@ -23,12 +23,16 @@ app.listen(port, () => console.log(`App listening on port ${port}`));
 const passport = require('passport');
 require('./lib/passport')(passport);
 
-var user = require('./route/user')(express, passport);
-var book = require('./route/books')(express);
+// EVERY ROUTE INCLUDED IN INDEX FILE
+// var user = require('./route/user')(express, passport);
+// var book = require('./route/books')(express);
 
 
-app.use('/api/books', book);
-app.use('/api/user', user);
+// app.use('/api/books', book);
+// app.use('/api/user', user);
+
+var index = require('./route/index')(express, passport);
+app.use('/api', index);
 
 app.use(function (req, res) {
 	return res.status(404).send({ message: 'Route' + req.url + ' Not found.' });
